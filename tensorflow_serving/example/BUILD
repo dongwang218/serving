@@ -102,10 +102,42 @@ cc_binary(
     ],
 )
 
+cc_binary(
+    name = "caffenet_inference",
+    srcs = [
+        "caffenet_inference.cc",
+    ],
+    linkopts = ["-lm"],
+    deps = [
+        "@tf//tensorflow/core:core_cpu",
+        "@tf//tensorflow/core:framework",
+        "@tf//tensorflow/core:lib",
+        "@tf//tensorflow/core:protos_all_cc",
+        "@tf//tensorflow/core:tensorflow",
+        ":mnist_grpc_cc",
+        "//grpc",
+        "//tensorflow_serving/session_bundle",
+        "//tensorflow_serving/session_bundle:manifest_proto",
+        "//tensorflow_serving/session_bundle:signature",
+    ],
+)
+
 py_binary(
     name = "mnist_client",
     srcs = [
         "mnist_client.py",
+        "mnist_inference_pb2.py",
+    ],
+    deps = [
+        "@tf//tensorflow:tensorflow_py",
+        ":mnist_input_data",
+    ],
+)
+
+py_binary(
+    name = "caffenet_client",
+    srcs = [
+        "caffenet_client.py",
         "mnist_inference_pb2.py",
     ],
     deps = [
