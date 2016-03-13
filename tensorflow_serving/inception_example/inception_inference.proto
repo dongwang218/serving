@@ -1,0 +1,23 @@
+// Protobuf definition of INCEPTION model inference server.
+// The server classifies 28x28 greyscale image into digit 0-9.
+// See inception_model.py for model details.
+// See minist_inference.cc for server implementation.
+
+syntax = "proto3";
+
+package tensorflow.serving;
+
+message InceptionRequest {
+  // Raw jpeg image data
+  bytes image_data = 1;
+};
+
+message InceptionResponse {
+  // Matching probability of digit 0-9 in range [0.0, 1.0].
+  repeated float value = 1 [packed = true];
+};
+
+service InceptionService {
+  // Classifies image into digits.
+  rpc Classify(InceptionRequest) returns (InceptionResponse);
+}

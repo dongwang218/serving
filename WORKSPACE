@@ -26,6 +26,12 @@ bind(
 )
 
 bind(
+    name = "protobuf_compiler",
+    actual = "@tf//google/protobuf:protoc_lib",
+)
+
+
+bind(
     name = "zlib",
     actual = "@zlib_archive//:zlib",
 )
